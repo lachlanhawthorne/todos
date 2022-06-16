@@ -1,0 +1,35 @@
+{
+  "name": "tamagui-app",
+  "private": true,
+  "workspaces": [
+    "expo",
+    "next",
+    "packages/*"
+  ],
+  "scripts": {
+    "native": "yarn build && cd expo && yarn start",
+    "web": "yarn build && cd next && yarn next",
+    "watch": "yarn workspaces foreach -pi run watch",
+    "postinstall": "yarn build",
+    "build": "yarn workspaces foreach --exclude next-app -pi run build",
+    "upgrade:tamagui": "manypkg upgrade tamagui && manypkg upgrade @tamagui && manypkg upgrade tamagui-loader",
+    "sync:tamagui": "${TAMAGUI_PATH:-$HOME/tamagui}/starters-sync.sh"
+  },
+  "resolutions": {
+    "cacache": "16.0.7",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-refresh": "0.11.0",
+    "react-native-web": "0.17.7"
+  },
+  "devDependencies": {
+    "@manypkg/cli": "^0.19.1",
+    "@types/react": "^17.0.39",
+    "@types/react-native": "^0.67.2",
+    "eslint": "^8.11.0",
+    "prettier": "^2.6.2",
+    "turbo": "^1.1.6",
+    "typescript": "^4.6.3"
+  },
+  "packageManager": "yarn@3.2.0"
+}
