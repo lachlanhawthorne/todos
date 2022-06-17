@@ -20,6 +20,7 @@ const transform = withPlugins([
     'expo-linking',
     'expo-constants',
     'expo-modules-core',
+    'data-access'
   ]),
   withTamagui({
     config: './tamagui.config.ts',
@@ -58,6 +59,10 @@ module.exports = function (name, { defaultConfig }) {
       scrollRestoration: true,
       legacyBrowsers: false,
       browsersListForSwc: true,
+    },
+    env: {
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
     }
   })
 }

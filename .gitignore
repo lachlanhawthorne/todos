@@ -27,3 +27,12 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# Supabase
+**/supabase/.branches
+**/supabase/.temp
+
+# Environment variables used by the application
+**/.env
+.env.local
+.env

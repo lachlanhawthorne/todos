@@ -1,3 +1,1 @@
-import { HomeScreen } from 'app/features/home/screen'
-
-export default HomeScreen
+export { HomeScreen as default, getServerSideProps } from 'app/features/home/screen';
