@@ -11,12 +11,15 @@ import TodoItem from './TodoItem';
 
 
 export default function Todos({ ssrTodos }: { ssrTodos?: Todo[] }) {
-  const user = getUser()
-
+  const [ ssrTodosData, setSsrTodosData ] = useState<Todo[] | null>(ssrTodos || []);
   const [ atomTodos ] = useAtom(todosAtom);
-  const todos = user ? (atomTodos || ssrTodos) : []
 
-  useEffect(() => console.log(todos), [todos])
+  useEffect(() => {
+    // reset ssrTodos once we have atomTodos
+    if(ssrTodosData && atomTodos.length) setSsrTodosData(null)
+  }, [atomTodos]);
+
+  const todos = ssrTodosData || atomTodos;
 
   return (
     <>

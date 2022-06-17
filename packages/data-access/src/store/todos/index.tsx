@@ -23,6 +23,9 @@ export const addTodoAtom = atom(
       .then((res) => {
         if(res?.data) {
           const { user_id, task } = res.data[0]
+          // need to fix this
+          // adds 2 todos as this is only a partial object
+          
           // set(todosAtom, addTodo(get(todosAtom), user_id, task as string))
           set(newTodoAtom, "")
         }

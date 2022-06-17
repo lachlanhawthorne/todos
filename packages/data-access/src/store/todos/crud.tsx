@@ -2,6 +2,7 @@ import type { definitions } from '../../types/supabase';
 export type Todo = definitions["todos"];
 
 // create
+// needs to be the full object to create
 export const addTodo = (
   todos: Todo[], user_id: string, task: string
 ): any[] => [
