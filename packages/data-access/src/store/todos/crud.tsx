@@ -2,20 +2,16 @@ import type { definitions } from '../../types/supabase';
 export type Todo = definitions["todos"];
 
 // create
-// needs to be the full object to create
 export const addTodo = (
-  todos: Todo[], user_id: string, task: string
+  todos: Todo[], todo: Todo
 ): any[] => [
-  ...todos, {
-    user_id,
-    task,
-    is_complete: false,
-  }
+  ...todos,
+  todo
 ]
 
 // update
 export const updateTodo = ( 
-  todos: Todo[], id: number, task: string, is_complete?: boolean
+  todos: Todo[], id: number, task: string
 ): Todo[] => 
   todos.map(todo => ({
     ...todo,
@@ -35,4 +31,3 @@ export const removeTodo = (
   todos: Todo[], id: number
 ): Todo[] =>
   todos.filter((todo) => todo.id !== id);
-

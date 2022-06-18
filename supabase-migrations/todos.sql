@@ -7,6 +7,7 @@ create table todos (
 );
 
 alter table todos enable row level security;
+alter publication supabase_realtime add table todos;
 
 create policy "Individuals can create todos." on todos for
     insert with check (auth.uid() = user_id);

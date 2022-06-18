@@ -1,19 +1,12 @@
-import React, { useContext, useEffect } from 'react'
-import { Anchor, Button, H1, Paragraph, Separator, XStack, YStack } from '@my/ui'
-
-import { 
-  definitions, 
-  getUser,
-  getServerUser,
-  supabaseServerClient 
-} from 'data-access'
-
+import React from 'react'
+import { Button, H1, Paragraph, Separator, XStack, YStack } from '@my/ui'
+import { definitions, getUser, getServerUser, supabaseServerClient } from 'data-access'
 import { useLink } from 'solito/link'
-
 import { User, LogIn } from '@tamagui/feather-icons'
-import Todos from './Todos'
 
-export function HomeScreen({ ssrTodos }: { ssrTodos: definitions["todos"][] }) {
+import TodoList from './TodoList'
+
+export function TodosScreen({ ssrTodos }: { ssrTodos: definitions["todos"][] }) {
   const user = getUser()
   
   const linkProps = useLink({
@@ -32,7 +25,7 @@ export function HomeScreen({ ssrTodos }: { ssrTodos: definitions["todos"][] }) {
           {
             user
               ? (
-                <Todos ssrTodos={ssrTodos} />
+                <TodoList ssrTodos={ssrTodos} />
               )
               : (
                 <Paragraph ta="center" color="$gray9Dark">
@@ -52,10 +45,6 @@ export function HomeScreen({ ssrTodos }: { ssrTodos: definitions["todos"][] }) {
           {user ? 'Account Settings' : 'Sign in'}
         </Button>
       </XStack>
-
-      <Paragraph ta="center">
-        View Credits
-      </Paragraph>
     </YStack>
   )
 }

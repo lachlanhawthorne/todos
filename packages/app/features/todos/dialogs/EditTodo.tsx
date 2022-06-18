@@ -15,7 +15,7 @@ export default function EditTodoDialog({ children, todoId, todoTask }: { childre
       <Dialog.Trigger asChild>
         {children}
       </Dialog.Trigger>
-      <Dialog.Portal> 
+      <Dialog.Portal px="$4"> 
         <Dialog.Overlay key="overlay" o={0.5} />
         <Dialog.Content
           bordered
@@ -36,11 +36,10 @@ export default function EditTodoDialog({ children, todoId, todoTask }: { childre
           scale={1}
           opacity={1}
           y={0}
+          w="100%"
+          maxWidth={400}
         >
-          <Dialog.Title>Edit profile</Dialog.Title>
-          <Dialog.Description>
-            Make changes to your profile here. Click save when you're done.
-          </Dialog.Description>
+          <Dialog.Title>Edit todo</Dialog.Title>
 
           <YStack h="$6">
             <Input 
@@ -58,7 +57,7 @@ export default function EditTodoDialog({ children, todoId, todoTask }: { childre
                 user_id: user?.id as string,
                 task,
               })}>
-                Save changes
+                Update todo
               </Button>
             </Dialog.Close>
           </YStack>

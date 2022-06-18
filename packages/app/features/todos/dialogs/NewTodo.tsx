@@ -1,4 +1,4 @@
-import { X } from '@tamagui/feather-icons'
+import { X, Plus } from '@tamagui/feather-icons'
 import { getUser, Todo } from 'data-access'
 import React, { useEffect } from 'react'
 import { Button, Dialog, Paragraph, Input, Unspaced, YStack } from 'tamagui'
@@ -13,9 +13,9 @@ export default function NewTodoDialog() {
   return (
     <Dialog modal>
       <Dialog.Trigger asChild>
-        <Button>New Todo</Button>
+        <Button icon={Plus}>New Todo</Button>
       </Dialog.Trigger>
-      <Dialog.Portal>
+      <Dialog.Portal px="$4">
         <Dialog.Overlay key="overlay" o={0.5} />
         <Dialog.Content
           bordered
@@ -36,16 +36,10 @@ export default function NewTodoDialog() {
           scale={1}
           opacity={1}
           y={0}
-          width="100%"
+          w="100%"
           maxWidth={400}
-          mx={40}
         >
           <Dialog.Title>New Todo</Dialog.Title>
-
-
-          <Dialog.Description>
-            {/* Make changes to your profile here. Click save when you're done. */}
-          </Dialog.Description>
 
           <YStack h="$6">
             <Input 
@@ -62,7 +56,7 @@ export default function NewTodoDialog() {
                 addTodo({ user_id: user?.id as string })
                 setNewTodo("")
               }}>
-                Save changes
+                Create todo 
               </Button>
             </Dialog.Close>
           </YStack>

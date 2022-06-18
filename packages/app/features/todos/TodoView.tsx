@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import { XStack, Button, Paragraph, Separator } from '@my/ui';
-import { definitions, Todo, removeTodoAtom, toggleTodoAtom, updateTodoAtom, getUser } from 'data-access';
+import { Todo, removeTodoAtom, toggleTodoAtom, getUser } from 'data-access';
 
 import { Check, Trash } from '@tamagui/feather-icons'
 import { useSetAtom } from 'jotai';
-import EditTodoDialog from './dialog/EditTodo';
 
-export default function TodoItem({ data } : { data: Todo }) {
+import EditTodoDialog from './dialogs/EditTodo';
+
+export default function TodoView({ data } : { data: Todo }) {
   const user = getUser()
   
   const removeTodo = useSetAtom(removeTodoAtom);

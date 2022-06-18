@@ -7279,6 +7279,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv@npm:^16.0.0":
+  version: 16.0.1
+  resolution: "dotenv@npm:16.0.1"
+  checksum: f459ffce07b977b7f15d8cc4ee69cdff77d4dd8c5dc8c85d2d485ee84655352c2415f9dd09d42b5b5985ced3be186130871b34e2f3e2569ebc72fbc2e8096792
+  languageName: node
+  linkType: hard
+
 "duplexer3@npm:^0.1.4":
   version: 0.1.4
   resolution: "duplexer3@npm:0.1.4"
@@ -8245,6 +8252,7 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     react-native: 0.68.2
+    react-native-dotenv: ^3.3.1
     react-native-gesture-handler: ~2.2.0
     react-native-reanimated: ~2.8.0
     react-native-safe-area-context: ^4.2.5
@@ -14927,6 +14935,15 @@ __metadata:
     jscodeshift: ^0.13.1
     nullthrows: ^1.1.1
   checksum: 32ac7e77851df32fdafa6721c01e3bbfe4e42ca4b8e6d6e7e64b96200060629b3c0475bd7007de6db96b4c5edef1f6dd625fb7b77efa8f7fd1869c0777b064cc
+  languageName: node
+  linkType: hard
+
+"react-native-dotenv@npm:^3.3.1":
+  version: 3.4.0
+  resolution: "react-native-dotenv@npm:3.4.0"
+  dependencies:
+    dotenv: ^16.0.0
+  checksum: 3bc8ef4fc2acc930b754ff6b7ae5f5abdf38864e717bced7459902c6b3f8262db234001530ee296f40112a5db467635ba249ae64b954ec29ab84dc80c2c47312
   languageName: node
   linkType: hard
 

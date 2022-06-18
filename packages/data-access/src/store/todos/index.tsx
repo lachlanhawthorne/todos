@@ -11,8 +11,7 @@ export const newTodoAtom = atom<string>("")
 export const todosAtom = atom<Todo[]>([])
 
 export const addTodoAtom = atom(
-  () => "", 
-  (
+  () => "",  (
     get, set, 
     { user_id }: { user_id: string }
   ) => {
@@ -22,11 +21,8 @@ export const addTodoAtom = atom(
       .insert({ user_id, task: get(newTodoAtom) })
       .then((res) => {
         if(res?.data) {
-          const { user_id, task } = res.data[0]
-          // need to fix this
-          // adds 2 todos as this is only a partial object
-          
-          // set(todosAtom, addTodo(get(todosAtom), user_id, task as string))
+          const resTodo = res.data[0]
+          set(todosAtom, addTodo(get(todosAtom), resTodo))
           set(newTodoAtom, "")
         }
       })
@@ -49,7 +45,7 @@ export const updateTodoAtom = atom(
           set(todosAtom, updateTodo(get(todosAtom), id, task as string))
         }
       })
-    }
+  }
 )
 
 export const toggleTodoAtom = atom(
@@ -66,11 +62,10 @@ export const toggleTodoAtom = atom(
       .match({ user_id, id })
       .then(res => {
         if(res?.data) {
-          console.log('toggled', res)
           set(todosAtom, toggleTodo(get(todosAtom), id ))
         }
       })
-    }
+  }
 )
 
 export const removeTodoAtom = atom(
@@ -85,27 +80,21 @@ export const removeTodoAtom = atom(
       .delete()
       .match({ user_id, id })
       .then((res) => res?.data) // server
-    }
+  }
 )
 
 // Supabase Realtime
 todosAtom.onMount = setTodos => {
   // initial data
-  const getInitialTodos = () => supabaseClient
+  supabaseClient
     .from<Todo>("todos")
     .select()
-    .then((res) => res?.data) // server
+    .then((res) => res?.data && setTodos(res.data))
     
-  setTimeout(async () => {
-    const newTodos = await getInitialTodos()
-    if(newTodos) setTodos(newTodos)
-  }, 1000)
-
   // subscribe to realtime db changes
   const realtimeSubscription = supabaseClient
     .from<Todo>("todos")
     .on('*', payload => {
-      console.log('todos updated', payload)
       switch(payload.eventType) {
         case 'INSERT':
         case 'UPDATE':
@@ -116,7 +105,6 @@ todosAtom.onMount = setTodos => {
             const exists = prevTodos.find((todo) => todo.id === newTodo.id);
 
             if (exists) {
-              console.log('update')
               // update
               const oldTodoIndex = prevTodos.findIndex(
                 (obj) => obj.id === newTodo.id
@@ -151,4 +139,6 @@ todosAtom.onMount = setTodos => {
       } 
     })
     .subscribe()
+
+    return () => realtimeSubscription.unsubscribe()
 }

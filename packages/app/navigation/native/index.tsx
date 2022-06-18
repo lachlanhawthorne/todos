@@ -1,36 +1,28 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-import { HomeScreen } from '../../features/home/screen'
+import { TodosScreen } from '../../features/todos/screen'
 import { UserScreen } from '../../features/user/screen'
-import { UserDetailScreen } from '../../features/user/detail-screen'
 
 const Stack = createNativeStackNavigator<{
-  home: undefined
-  'user-detail': { id: string }
+  todos: undefined
   'user': undefined
 }>()
 
 export function NativeNavigation() {
   return (
+    // @ts-ignore
     <Stack.Navigator>
       <Stack.Screen
-        name="home"
-        component={HomeScreen}
+        name="todos"
+        component={TodosScreen}
         options={{
-          title: 'Home',
+          title: 'Todos',
         }}
       />
       <Stack.Screen
         name="user"
         component={UserScreen}
-        options={{
-          title: 'User',
-        }}
-      />
-      <Stack.Screen
-        name="user-detail"
-        component={UserDetailScreen}
         options={{
           title: 'User',
         }}

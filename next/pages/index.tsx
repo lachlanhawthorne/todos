@@ -1,1 +1,1 @@
-export { HomeScreen as default, getServerSideProps } from 'app/features/home/screen';
+export { TodosScreen as default, getServerSideProps } from 'app/features/todos/screen';

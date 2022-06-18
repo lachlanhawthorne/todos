@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react';
-import { supabaseClient, definitions, getUser } from 'data-access';
-import { YStack, XStack, Paragraph, Button } from '@my/ui';
+import { YStack } from '@my/ui';
+import { useAtom } from 'jotai'
+import { todosAtom } from 'data-access';
 
-import { useAtom, useSetAtom } from 'jotai'
-import { todosAtom, addTodoAtom } from 'data-access';
-import NewTodoDialog from './dialog/NewTodo';
+import NewTodoDialog from './dialogs/NewTodo';
+import TodoView from './TodoView';
 
 import type { Todo } from 'data-access';
-import TodoItem from './TodoItem';
 
-
-export default function Todos({ ssrTodos }: { ssrTodos?: Todo[] }) {
+export default function TodoList({ ssrTodos }: { ssrTodos?: Todo[] }) {
   const [ ssrTodosData, setSsrTodosData ] = useState<Todo[] | null>(ssrTodos || []);
   const [ atomTodos ] = useAtom(todosAtom);
 
@@ -25,7 +23,7 @@ export default function Todos({ ssrTodos }: { ssrTodos?: Todo[] }) {
     <>
       <YStack mb="$6">
         {todos && todos.map(todo => 
-          <TodoItem
+          <TodoView
             data={todo} 
             key={todo.id} 
           />

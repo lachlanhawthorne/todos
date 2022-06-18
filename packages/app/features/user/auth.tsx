@@ -1,5 +1,5 @@
 import { KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard, Platform, View } from 'react-native'
-import { Button, Fieldset, Form, H1, Input, Label, Separator, XStack, YStack } from '@my/ui'
+import { Button, Fieldset, Form, H1, Input, Label, Paragraph, Separator, XStack, YStack } from '@my/ui'
 import { supabaseClient } from 'data-access'
 import React, { useState } from 'react'
 import { ApiError } from '@supabase/supabase-js'
@@ -9,6 +9,7 @@ export function AuthScreen() {
 
   const [authType, setAuthType] = useState<'sign-in' | 'register'>('sign-in')
   const [authError, setAuthError] = useState<ApiError | null>(null)
+  const [confirmEmailSent, setConfirmEmailSent] = useState(false)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,6 +35,7 @@ export function AuthScreen() {
     })
 
     if (error) setAuthError(error)
+    if (user) setConfirmEmailSent(true)
     setLoading(false)
   }
 
@@ -74,8 +76,9 @@ export function AuthScreen() {
                   borderColor={authType === 'sign-in' ? '#fff' : '#444'}
                   focusStyle={{ backgroundColor: '#111', borderColor: '#fff' }}
                   onClick={(e: any) => {
-                    setAuthError(null)
                     e.preventDefault()
+                    setAuthError(null)
+                    setConfirmEmailSent(false)
                     setAuthType('sign-in')
                   }}
                 >
@@ -91,8 +94,9 @@ export function AuthScreen() {
                   borderColor={authType === 'register' ? '#fff' : '#444'}
                   focusStyle={{ backgroundColor: '#111', borderColor: '#fff' }}
                   onClick={(e: any) => {
-                    setAuthError(null)
                     e.preventDefault()
+                    setAuthError(null)
+                    setConfirmEmailSent(false)
                     setAuthType('register')
                   }}
                 >
@@ -103,40 +107,54 @@ export function AuthScreen() {
 
               {
                 authError?.message && (
-                  <View style={{
-                    backgroundColor: '#f00',
-                    padding: 10,
-                    borderRadius: 10,
-                    marginBottom: 10,
-                  }}>
-                    <Label size={'$5'} color="#fff">{authError.message}</Label>
-                  </View>
+                  <XStack 
+                    backgroundColor="$red2Dark"
+                    borderColor="$red9"
+                    borderWidth={1}
+                    py={10}
+                    px={15}
+                    borderRadius="$4"
+                    mb={10}
+                  >
+                    <Paragraph size={'$5'} color="$red9">{authError.message}</Paragraph>
+                  </XStack>
+                )
+              }
+
+              {
+                confirmEmailSent && (
+                  <XStack 
+                    backgroundColor="$green2Dark"
+                    borderColor="$green9"
+                    borderWidth={1}
+                    py={10}
+                    px={15}
+                    borderRadius="$4"
+                    mb={10}
+                  >
+                    <Paragraph size={'$5'} color="$green9">Please confirm your email address</Paragraph>
+                  </XStack>
                 )
               }
 
               <Form>
 
                 <Fieldset>
-                  <Label justifyContent="flex-end" htmlFor="name">
-                    Email Address
-                  </Label>
+                  <Label htmlFor="email">Email</Label>
                   <Input 
                     f={1} 
-                    id="name" 
+                    id="email" 
                     placeholder="Email Address"
                     keyboardType='email-address'
                     returnKeyType='next'
                     returnKeyLabel='Continue'
                     keyboardAppearance='dark'
-                    onChangeText={(text) => setEmail(text)}
-                    
+                    onChangeText={(text) => setEmail(text)} 
                   />
                 </Fieldset>
 
-                <Fieldset mt={'$4'}>
-                  <Label justifyContent="flex-end" htmlFor="password">
-                    Password
-                  </Label>
+                <Fieldset>
+                  <Label htmlFor="password">Password</Label>
                   <Input 
                     f={1} 
                     id="password" 
@@ -161,15 +179,6 @@ export function AuthScreen() {
                 }}
               >
                 { authType === 'sign-in' ? 'Sign in' : 'Register' }
-              </Button>
-
-              <Button
-                onPress={(e) => {
-                  e.preventDefault()
-                  signOut()
-                }}
-              >
-                Sign Out
               </Button>
             </YStack>
 

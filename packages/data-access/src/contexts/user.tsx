@@ -7,9 +7,7 @@ type UserContextProps = { user?: User | null };
 export const UserContext = createContext<UserContextProps | null>(null);
 
 export const UserProvider = ({ ssrUserData, children }: any) => {
-  useEffect(() => console.log('loads on mobile'), [])
-
-  const [ ssrUser, setSsrUser ] = useState<User | null>(ssrUserData); // 
+  const [ ssrUser, setSsrUser ] = useState<User | null>(ssrUserData);
   const { user: supabaseAuthUser } = useUser(); // supabase-auth-helpers
   
   // use user data as fallback
