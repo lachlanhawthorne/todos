@@ -5,11 +5,8 @@
 import { UserProvider } from '@supabase/supabase-auth-helpers/react'
 import { supabaseClient } from 'data-access'
 
-export const NavigationProvider = ({
-  children,
-}: {
-  children: React.ReactElement
-}) => (
+
+export const NavigationProvider = ({ children }: { children: React.ReactNode }) => (
   <UserProvider supabaseClient={supabaseClient}>
     {children}
   </UserProvider>

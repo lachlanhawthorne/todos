@@ -29,7 +29,7 @@ yarn-error.log*
 *.tsbuildinfo
 
 # Supabase
-/supabase
+supabase
 
 # Environment variables used by the application
 **/.env

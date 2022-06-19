@@ -8,7 +8,7 @@
 
 This monorepo is a starter todo app, built using Supabase + Expo + Next.js + Tamagui + Solito, adapted from the Tamagui starter (`npx create-tamagui-app@latest`). 
 
-[Tamagui](https://tamagui.dev) is a universal design systems for React Native & Web built by [@natebirdman](https://twitter.com/natebirdman).
+[Tamagui](https://tamagui.dev) is a universal design system for React Native & Web built by [@natebirdman](https://twitter.com/natebirdman).
 
 Many thanks to  [@FernandoTheRojo](https://twitter.com/fernandotherojo) for the Solito starter monorepo which this was initally forked from. Check out his [talk about using expo + next together at Next.js Conf 2021](https://www.youtube.com/watch?v=0lnbdRweJtA).
 
@@ -87,9 +87,9 @@ create policy "Individuals can delete their own todos." on todos for
 - Init supabase in the project `supabase init`
 - Login with an access token `supabase login`
 - Link to your project `supabase link --project-ref [project-ref]`
-- Link your Supabase database `supabase db remote set [database-connection-string with port 5432]`
+- Link your Supabase database `supabase db remote set [database connection string with port 5432]`
 - Create a new migration `supabase migration new todos`
-- Copy the schema from `supabase-migrations/todos.sql` into the new migration at `supabase/migrations/[migration]_todos.sql`
+- Copy the schema from `todos.sql` into the new migration at `supabase/migrations/[migration]_todos.sql`
 - Run the todos migration `supabase db push`
 
 ## Developing

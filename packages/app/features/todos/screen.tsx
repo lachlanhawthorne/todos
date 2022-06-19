@@ -4,6 +4,8 @@ import { definitions, getUser, getServerUser, supabaseServerClient } from 'data-
 import { useLink } from 'solito/link'
 import { User, LogIn } from '@tamagui/feather-icons'
 
+import type { GetServerSidePropsContext } from 'next'
+
 import TodoList from './TodoList'
 
 export function TodosScreen({ ssrTodos }: { ssrTodos: definitions["todos"][] }) {
@@ -49,19 +51,22 @@ export function TodosScreen({ ssrTodos }: { ssrTodos: definitions["todos"][] }) 
   )
 }
 
-export async function getServerSideProps(context) {
-  const { accessToken } = await getServerUser(context)
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  // check for cookies before fetching user data
+  // https://github.com/supabase-community/auth-helpers/issues/114
+  if(context.req.headers.cookie) {
+    const { accessToken } = await getServerUser(context)
 
-  accessToken && supabaseServerClient(context).auth.setAuth(accessToken)
-  supabaseServerClient(context).auth.refreshSession()
-
-  const todos = await supabaseServerClient(context)
-    .from<definitions['todos']>('todos')
-    .select()
+    accessToken && supabaseServerClient(context).auth.setAuth(accessToken)
+    supabaseServerClient(context).auth.refreshSession()
   
-  return {
-    props: {
-      ssrTodos: todos?.data ?? null
-    }
+    const todos = await supabaseServerClient(context)
+      .from<definitions['todos']>('todos')
+      .select()
+    
+    return { props: { ssrTodos: todos?.data ?? null } }
+
+  } else { 
+    return { props: { ssrTodos: null } }
   }
 }

@@ -3,7 +3,7 @@
   "packageManager": "yarn@3.2.0",
   "main": "src/index.tsx",
   "scripts": {
-    "supabase:types": "openapi-typescript $(grep SUPABASE_REST_API_URL .env | cut -d '=' -f2)=$(grep SUPABASE_REST_API_URL .env | cut -d '=' -f3) --output src/types/supabase.ts"
+    "supabase:types": "env-cmd openapi-typescript SUPABASE_REST_API_URL --output src/types/supabase.ts"
   },
   "dependencies": {
     "@supabase/supabase-auth-helpers": "^1.4.2",
@@ -11,6 +11,7 @@
     "jotai": "^1.7.2"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "openapi-typescript": "^5.4.0"
   },
   "sideEffects": false

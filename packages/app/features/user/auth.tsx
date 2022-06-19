@@ -116,7 +116,7 @@ export function AuthScreen() {
                     borderRadius="$4"
                     mb={10}
                   >
-                    <Paragraph size={'$5'} color="$red9">{authError.message}</Paragraph>
+                    <Paragraph size={'$4'} color="$red9">{authError.message}</Paragraph>
                   </XStack>
                 )
               }
@@ -132,7 +132,7 @@ export function AuthScreen() {
                     borderRadius="$4"
                     mb={10}
                   >
-                    <Paragraph size={'$5'} color="$green9">Please confirm your email address</Paragraph>
+                    <Paragraph size={'$4'} color="$green9">Please confirm your email address</Paragraph>
                   </XStack>
                 )
               }
