@@ -52,21 +52,14 @@ export function TodosScreen({ ssrTodos }: { ssrTodos: definitions["todos"][] }) 
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  // check for cookies before fetching user data
-  // https://github.com/supabase-community/auth-helpers/issues/114
-  if(context.req.headers.cookie) {
-    const { accessToken } = await getServerUser(context)
+  const { accessToken } = await getServerUser(context)
 
-    accessToken && supabaseServerClient(context).auth.setAuth(accessToken)
-    supabaseServerClient(context).auth.refreshSession()
+  accessToken && supabaseServerClient(context).auth.setAuth(accessToken)
+  supabaseServerClient(context).auth.refreshSession()
+
+  const todos = await supabaseServerClient(context)
+    .from<definitions['todos']>('todos')
+    .select()
   
-    const todos = await supabaseServerClient(context)
-      .from<definitions['todos']>('todos')
-      .select()
-    
-    return { props: { ssrTodos: todos?.data ?? null } }
-
-  } else { 
-    return { props: { ssrTodos: null } }
-  }
+  return { props: { ssrTodos: todos?.data ?? null } }
 }

@@ -6,7 +6,7 @@ export const addTodo = (
   todos: Todo[], todo: Todo
 ): any[] => [
   ...todos,
-  todo
+  ...(todos.some(t => t.id === todo.id) ? [] : [todo])
 ]
 
 // update

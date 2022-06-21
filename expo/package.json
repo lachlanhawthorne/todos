@@ -23,7 +23,7 @@
     "@babel/core": "^7.17.9",
     "@expo/metro-config": "^0.3.16",
     "@expo/webpack-config": "^0.16.23",
-    "@tamagui/babel-plugin": "1.0.1-beta.67",
+    "@tamagui/babel-plugin": "1.0.1-beta.72",
     "@types/react": "~17.0.21",
     "@types/react-native": "^0.67.4",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",

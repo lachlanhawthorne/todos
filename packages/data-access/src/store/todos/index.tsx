@@ -1,13 +1,11 @@
 import { atom } from 'jotai';
 import { supabaseClient } from '../../clients/supabase';
+import { addTodo, updateTodo, toggleTodo, removeTodo } from './crud';
 
 import type { definitions } from '../../types/supabase';
 export type Todo = definitions["todos"];
 
-import { addTodo, updateTodo, toggleTodo, removeTodo } from './crud';
-
 export const newTodoAtom = atom<string>("")
-
 export const todosAtom = atom<Todo[]>([])
 
 export const addTodoAtom = atom(
@@ -73,23 +71,31 @@ export const removeTodoAtom = atom(
     get, set, 
     { user_id, id } : { user_id: string, id: number }
   ) => {
-    set(todosAtom, removeTodo(get(todosAtom), id)) // client
-
     const delted = supabaseClient
       .from<Todo>("todos")
       .delete()
       .match({ user_id, id })
-      .then((res) => res?.data) // server
+      .then((res) => {
+        if(res?.data) {
+          set(todosAtom, removeTodo(get(todosAtom), id))
+        }
+      })
   }
 )
 
 // Supabase Realtime
 todosAtom.onMount = setTodos => {
-  // initial data
+  // initial data for native
   supabaseClient
     .from<Todo>("todos")
     .select()
-    .then((res) => res?.data && setTodos(res.data))
+    .then((res) => {
+      res?.data && setTodos(prevTodos => 
+        prevTodos.length == 0 
+          ? [...prevTodos, ...res.data] 
+          : prevTodos
+      )
+    })
     
   // subscribe to realtime db changes
   const realtimeSubscription = supabaseClient
@@ -120,18 +126,14 @@ todosAtom.onMount = setTodos => {
               // create
               newTodos = [...prevTodos, newTodo];
             }
-
-            newTodos.sort((a, b) => b.id - a.id);
-
+            
             return newTodos;
           })
           
           break;
         case 'DELETE':
           setTodos(prevTodos => 
-            prevTodos.some(todo => todo.id === payload.old.id) // todo exists
-              ? prevTodos.filter(todo => todo.id !== payload.old.id) // remove todo from todos
-              : prevTodos
+            prevTodos.filter(todo => todo.id !== payload.old.id)
           );
           break;
         default:

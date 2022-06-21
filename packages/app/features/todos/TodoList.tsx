@@ -9,15 +9,31 @@ import TodoView from './TodoView';
 import type { Todo } from 'data-access';
 
 export default function TodoList({ ssrTodos }: { ssrTodos?: Todo[] }) {
-  const [ ssrTodosData, setSsrTodosData ] = useState<Todo[] | null>(ssrTodos || []);
-  const [ atomTodos ] = useAtom(todosAtom);
+  const [ ssrTodosData, setSsrTodosData ] = useState<Todo[] | null>(ssrTodos || null);
+  const [ atomTodos, setAtomTodos ] = useAtom(todosAtom);
+
+  useEffect(() => { 
+    if(ssrTodosData 
+      && ssrTodosData?.length >= 1
+    ) setAtomTodos(ssrTodosData) 
+  }, []);
 
   useEffect(() => {
-    // reset ssrTodos once we have atomTodos
-    if(ssrTodosData && atomTodos.length) setSsrTodosData(null)
+    if(ssrTodosData 
+      && ssrTodosData.length >= 1 
+      && atomTodos.length >= 1 
+    ) setSsrTodosData([])
   }, [atomTodos]);
 
-  const todos = ssrTodosData || atomTodos;
+  const todos = (
+    ssrTodosData && ssrTodosData.length >=1 
+      ? ssrTodosData 
+      : null
+  ) || (
+    atomTodos.length >= 1 
+      ? atomTodos 
+      : null
+  );
 
   return (
     <>

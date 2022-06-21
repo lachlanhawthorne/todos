@@ -55,9 +55,8 @@ You can add other folders inside of `packages/` if you know what you're doing an
 
 ### Using GUI
 
-- Create a new project 
-- Navigate to the SQL Editor
-- Run the following Todos migration
+- Navigate to the project, then SQL Editor
+- Run the following 'todos' migration
 
 ``` sql
 create table todos (
@@ -99,7 +98,6 @@ create policy "Individuals can delete their own todos." on todos for
 - Navigate to the `data-access` package.
 - Set the `SUPABASE_REST_API_URL`, see .env.example for example
 - Generate new types from your Supabase project by running `yarn supabase:types`
-
 
 ### Tamagui
 
